@@ -2,7 +2,6 @@ package com.bank.mgt.system.entities;
 
 import jakarta.persistence.*;
 
-import javax.security.auth.login.AccountException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,13 +10,44 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     String name;
 
-    @OneToMany(mappedBy = "customer")
-    private List<Account> account=new ArrayList<>();
+    private List<Integer> accountList=new ArrayList<>();
 
-    @ManyToOne
-    private Manager manager;
+    @Column(name = "manager_id")
+    private Integer managerId;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Integer> getAccountList() {
+        return accountList;
+    }
+
+    public void setAccountList(List<Integer> accountList) {
+        this.accountList = accountList;
+    }
+
+    public Integer getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(Integer managerId) {
+        this.managerId = managerId;
+    }
 }
