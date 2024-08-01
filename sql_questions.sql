@@ -7,3 +7,8 @@ on e.id=eu.id;
 select i.title, i.rating
 from IMDB as i inner join genre as g
 on i.Movie_id=g.Movie_id where g.genre like 'C%' and i.budget > 40000000 and i.title like '%(2014)%';
+
+3. Rising Temperature
+select w1.id as "Id"
+from weather w1 inner join weather w2 
+on w1.recordDate=w2.recordDate+1 where w1.temperature>w2.temperature;
