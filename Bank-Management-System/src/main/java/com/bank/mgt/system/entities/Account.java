@@ -18,9 +18,19 @@ public abstract class Account {
     @Column(name = "customer_id")
     private Integer customerId;
 
-    private List<Integer> transactionList=new ArrayList<>();
-
+    @Enumerated(EnumType.STRING)
     private AccountType accountType;
+
+    public Account(){
+
+    }
+
+    public Account(Integer id, Double balance, Integer customerId, AccountType accountType) {
+        this.id = id;
+        this.balance = balance;
+        this.customerId = customerId;
+        this.accountType = accountType;
+    }
 
     public Integer getId() {
         return id;
@@ -46,19 +56,11 @@ public abstract class Account {
         this.customerId = customerId;
     }
 
-    public List<Integer> getTransactionList() {
-        return transactionList;
-    }
-
-    public void setTransactionList(List<Integer> transactionList) {
-        this.transactionList = transactionList;
-    }
-
-    public AccountType getAccount() {
+    public AccountType getAccountType() {
         return accountType;
     }
 
-    public void setAccount(AccountType account) {
+    public void setAccountType(AccountType account) {
         this.accountType = account;
     }
 
@@ -67,11 +69,11 @@ public abstract class Account {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return Objects.equals(id, account.id) && Objects.equals(balance, account.balance) && Objects.equals(customerId, account.customerId) && Objects.equals(transactionList, account.transactionList) && accountType == account.accountType;
+        return Objects.equals(id, account.id) && Objects.equals(balance, account.balance) && Objects.equals(customerId, account.customerId)  && accountType == account.accountType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, balance, customerId, transactionList, accountType);
+        return Objects.hash(id, balance, customerId, accountType);
     }
 }

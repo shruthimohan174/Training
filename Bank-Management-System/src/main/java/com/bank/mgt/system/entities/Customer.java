@@ -14,8 +14,6 @@ public class Customer {
 
     String name;
 
-    private List<Integer> accountList=new ArrayList<>();
-
     @Column(name = "manager_id")
     private Integer managerId;
 
@@ -33,14 +31,6 @@ public class Customer {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Integer> getAccountList() {
-        return accountList;
-    }
-
-    public void setAccountList(List<Integer> accountList) {
-        this.accountList = accountList;
     }
 
     public Integer getManagerId() {

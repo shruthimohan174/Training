@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -23,21 +24,28 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable Integer id, @RequestBody String name){
-        Customer newCustomer=customerService.updateCustomer(id,name);
+    public ResponseEntity<Customer> updateCustomer(@PathVariable Integer id, @RequestBody String name) {
+        Customer newCustomer = customerService.updateCustomer(id, name);
+        if (newCustomer == null) {
+            return new ResponseEntity<>(newCustomer, HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(newCustomer, HttpStatus.OK);
     }
 
     @GetMapping()
     public ResponseEntity <List<Customer>> getAllCustomers(){
-        List<Customer> newCustomer=customerService.findAllCustomer();
-        return new ResponseEntity<>(newCustomer, HttpStatus.OK);
+        List<Customer> customers = customerService.findAllCustomer();
+        if (customers == null || customers.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
+
     @DeleteMapping("/{id}")
-    public ResponseEntity <Customer> getCustomerById(@PathVariable Integer id){
+    public ResponseEntity <Customer> deleteCustomerById(@PathVariable Integer id){
         customerService.deleteCustomer(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
