@@ -6,4 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class SavingsAccount extends Account {
 
+    void print(){
+        System.out.println("This is Savings account");
+    }
 }

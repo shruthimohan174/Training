@@ -1,4 +1,10 @@
 package com.bank.mgt.system.classes;
 
-public class CurrentAccount {
+import com.bank.mgt.system.entities.Account;
+
+public class CurrentAccount extends Account {
+
+    void print(){
+        System.out.println("This is current account");
+    }
 }
