@@ -12,3 +12,9 @@ on i.Movie_id=g.Movie_id where g.genre like 'C%' and i.budget > 40000000 and i.t
 select w1.id as "Id"
 from weather w1 inner join weather w2 
 on w1.recordDate=w2.recordDate+1 where w1.temperature>w2.temperature;
+
+4.  Department Highest Salary
+select d.Name "Department",e.Name  "Employee",e.Salary  "salary"
+from Employee as e  inner join Department as d
+on e.DepartmentId=d.Id where (e.DepartmentId,e.Salary) in 
+(select DepartmentId,max(Salary) from Employee group by DepartmentId);
