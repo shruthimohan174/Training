@@ -9,6 +9,10 @@ import com.bank.mgt.system.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
+
 @Service
 public class AccountService {
 
@@ -19,17 +23,10 @@ public class AccountService {
 //        AccountType type = account.getAccountType();
         Account newAccount=null;
         switch(accountType){
-            case "Current":
-                newAccount=new CurrentAccount();
-                break;
-            case "Recurring":
-                newAccount=new RecurringAccount();
-                break;
-            case "Savings":
-                newAccount=new SavingsAccount();
-                break;
-            default :
-                throw new IllegalArgumentException("Invalid Account Type");
+            case "Current"->  newAccount=new CurrentAccount();
+            case "Recurring" -> newAccount=new RecurringAccount();
+            case "Savings"->  newAccount=new SavingsAccount();
+            default -> throw new IllegalArgumentException("Invalid Account Type");
         }
         if(newAccount==null)return null;
         newAccount.setId(accountId);
@@ -38,6 +35,52 @@ public class AccountService {
         newAccount.setAccountType(AccountType.valueOf(accountType));
 
         return accountRepository.save(newAccount);
+    }
 
+    public void depositMoney(Integer accountId, Double amount) throws Exception {
+        Account account=findByAccountId(accountId);
+        if(account instanceof SavingsAccount sa){
+            sa.deposit(amount);
+        }
+        else if(account instanceof CurrentAccount ca){
+            ca.deposit(amount);
+        }
+        else if(account instanceof RecurringAccount ra){
+            ra.deposit(amount);
+        }
+        else {
+            throw  new Exception("Invalid Account Type");
+        }
+            accountRepository.save(account);
+    }
+
+    public void withdrawMoney(Integer accountId, Double amount) throws Exception{
+        Account account=findByAccountId(accountId);
+        if(account instanceof SavingsAccount sa){
+            sa.withdraw(amount);
+        }
+        else if(account instanceof CurrentAccount ca){
+            ca.withdraw(amount);
+        }
+        else if(account instanceof RecurringAccount ra){
+            ra.withdraw(amount);
+        }
+        else {
+            throw  new Exception("Invalid Account Type");
+        }
+        accountRepository.save(account);
+    }
+
+
+    public List<Account> getAllAccounts() {
+        List<Account> accountList=accountRepository.findAll();
+        return accountRepository.saveAll(accountList);
+    }
+    public Account findByAccountId(Integer accountId) throws Exception {
+        Optional<Account>optionalAccount= accountRepository.findById(accountId);
+        if(!optionalAccount.isPresent()){
+            throw new Exception("Account not found");
+        }
+        return optionalAccount.get();
     }
 }

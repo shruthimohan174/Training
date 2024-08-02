@@ -21,10 +21,6 @@ public abstract class Account {
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
-    public Account(){
-
-    }
-
     public Account(Integer id, Double balance, Integer customerId, AccountType accountType) {
         this.id = id;
         this.balance = balance;
@@ -64,6 +60,9 @@ public abstract class Account {
         this.accountType = account;
     }
 
+    public Account(){
+
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
