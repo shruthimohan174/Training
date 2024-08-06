@@ -18,3 +18,22 @@ select d.Name "Department",e.Name  "Employee",e.Salary  "salary"
 from Employee as e  inner join Department as d
 on e.DepartmentId=d.Id where (e.DepartmentId,e.Salary) in 
 (select DepartmentId,max(Salary) from Employee group by DepartmentId);
+
+5. https://leetcode.com/problems/managers-with-at-least-5-direct-reports/?envType=study-plan-v2&envId=top-sql-50
+select e.name as "name" from Employee e inner join Employee m
+on e.id=m.managerId group by e.id having count(e.id)>=5;
+
+6. https://leetcode.com/problems/second-highest-salary/submissions/1345677488/?envType=study-plan-v2&envId=top-sql-50
+	a) with temp as
+	   (select id, salary, row_number() over (order by salary desc) as rn
+    		from employee )
+	  select max(case when rn='2' then salary 
+		   else null 
+		   end)as SecondHighestSalary 
+	   from temp;
+	b) select max(salary)as SecondHighestSalary from employee where salary not in (select max(salary)from employee)
+7.https://leetcode.com/problems/actors-and-directors-who-cooperated-at-least-three-times/description/
+select actor_id, director_id
+from ActorDirector
+group by actor_id,director_id having count(actor_id)>=3;
+
