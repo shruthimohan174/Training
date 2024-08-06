@@ -38,7 +38,6 @@ public class AccountController {
         }
     }
 
-
     @PostMapping("/{id}/withdraw")
     public ResponseEntity<String> withdrawMoney(@PathVariable Integer id,@RequestParam Double amount){
         try{

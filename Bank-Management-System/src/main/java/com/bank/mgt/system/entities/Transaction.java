@@ -20,6 +20,25 @@ public class Transaction {
     @Column(name = "account_id")
     private Integer accountId;
 
+    private String transactionType;
+
+    public Transaction(Integer accountId, Double amount, LocalDateTime timestamp, String transactionType) {
+        this.amount = amount;
+        this.timestamp = timestamp;
+        this.accountId = accountId;
+        this.transactionType = transactionType;
+    }
+    public  Transaction(){
+
+    }
+    public String getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
+    }
+
     public Integer getId() {
         return id;
     }

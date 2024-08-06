@@ -9,6 +9,7 @@ import com.bank.mgt.system.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +20,10 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private TransactionService transactionService;
+
     public Account createAccount(Integer accountId,Double balance,Integer customerId,String accountType){
-//        AccountType type = account.getAccountType();
         Account newAccount=null;
         switch(accountType){
             case "Current"->  newAccount=new CurrentAccount();
@@ -52,6 +55,7 @@ public class AccountService {
             throw  new Exception("Invalid Account Type");
         }
             accountRepository.save(account);
+        transactionService.createTransaction(accountId,amount, LocalDateTime.now(),"DEPOSIT");
     }
 
     public void withdrawMoney(Integer accountId, Double amount) throws Exception{
@@ -69,6 +73,7 @@ public class AccountService {
             throw  new Exception("Invalid Account Type");
         }
         accountRepository.save(account);
+        transactionService.createTransaction(accountId,amount, LocalDateTime.now(),"WITHDRAW");
     }
 
 
