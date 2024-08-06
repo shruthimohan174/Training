@@ -1,16 +1,16 @@
 package MergeIntervals;
 
-public class Interval implements  Comparable<Interval>{
-    int start, end;
+import java.util.Comparator;
 
-    Interval(int start, int end)
+public class Interval {
+    public int start;
+    public int end;
+
+    public Interval(int start, int end)
     {
         this.start = start;
         this.end = end;
     }
 
-    @Override
-    public int compareTo(Interval o) {
-        return Integer.compare(this.start, o.start);
-    }
+
 }

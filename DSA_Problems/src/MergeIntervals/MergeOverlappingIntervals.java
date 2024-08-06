@@ -2,6 +2,7 @@
 package MergeIntervals;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class MergeOverlappingIntervals {
 
@@ -16,11 +17,14 @@ public class MergeOverlappingIntervals {
     }
 
     private static void mergeIntervals(Interval[] arr) {
-
-        Arrays.sort(arr);
+        Arrays.sort(arr, new Comparator<Interval>() {
+            @Override
+            public int compare(Interval o1, Interval o2) {
+                return Integer.compare(o1.start,o2.end);
+            }
+        });
 
         int idx=0;
-
         for(int i=1;i< arr.length;i++){
             if(arr[idx].end >=arr[i].start){
                 arr[idx].end=Math.max(arr[idx].end, arr[i].end);
